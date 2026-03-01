@@ -2,62 +2,33 @@ import { useEffect, useState } from 'react'
 import heroBg from '../assets/Gemini_Generated_Image_ovf6v4ovf6v4ovf6.png'
 
 const Hero = () => {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 opacity-15">
-        <img src={heroBg} alt="" className="w-full h-full object-cover" />
+      <div className="absolute inset-0">
+        <img src={heroBg} alt="" className="w-full h-full object-contain object-center" />
       </div>
 
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-[#050505]/30 to-[#050505]" />
+
       <div className="relative z-10 text-center px-6 w-full max-w-2xl pt-20">
-        <h1 
-          className="text-6xl sm:text-7xl md:text-8xl font-medium mb-6 tracking-tight transition-all duration-700 ease-out delay-100"
-          style={{ 
-            opacity: loaded ? 1 : 0, 
-            transform: loaded ? 'translateY(0)' : 'translateY(15px)',
-            background: 'linear-gradient(135deg, #fefefe 0%, #fbbf24 50%, #d97706 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
+        <h1 className="text-6xl sm:text-7xl md:text-8xl font-medium mb-6 tracking-tight">
           $KRABS
         </h1>
 
-        <div className="flex items-center justify-center gap-2 mb-6" style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.7s ease-out 0.1s' }}>
-          <span 
-            className="text-[10px] tracking-[0.3em] uppercase"
-            style={{ color: 'rgba(251, 191, 36, 0.6)' }}
-          >
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: 'rgba(251, 191, 36, 0.6)' }}>
             Created by
           </span>
-          <a 
-            href="https://eve.army/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-all hover:text-amber-400"
-            style={{ color: 'rgba(251, 191, 36, 0.8)' }}
-          >
+          <a href="https://eve.army/" target="_blank" rel="noopener noreferrer" className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-all hover:text-amber-400" style={{ color: 'rgba(251, 191, 36, 0.8)' }}>
             eve.army
           </a>
         </div>
 
-        <p 
-          className="text-base sm:text-lg mb-10 max-w-md mx-auto transition-all duration-700 ease-out delay-200"
-          style={{ color: 'var(--color-text-secondary)', opacity: loaded ? 1 : 0 }}
-        >
+        <p className="text-base sm:text-lg mb-10 max-w-md mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
           The first AI Agent Meme to speak like a popular TV character.
         </p>
 
-        <div 
-          className="flex flex-wrap justify-center gap-3 transition-all duration-700 ease-out delay-300"
-          style={{ opacity: loaded ? 1 : 0 }}
-        >
+        <div className="flex flex-wrap justify-center gap-3">
           <a href="https://pump.fun/coin/CA" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 text-xs font-medium transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]" style={{ backgroundColor: '#d97706', color: '#000' }}>
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1-7.5v-5l4.5 2.5-4.5 2.5z"/></svg>
             Buy Token
@@ -77,7 +48,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2" style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.7s ease-out 0.5s' }}>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <a href="#story" className="text-xs flex flex-col items-center gap-1" style={{ color: 'var(--color-text-muted)' }}>
           <span>Scroll</span>
           <svg className="w-4 h-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"/></svg>

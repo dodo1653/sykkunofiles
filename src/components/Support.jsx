@@ -1,24 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-
 const Support = () => {
-  const [visible, setVisible] = useState(false)
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect() }
-    }, { threshold: 0.1 })
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <section ref={ref} id="disclaimer" className="py-20 md:py-24" style={{ backgroundColor: '#000000' }}>
+    <section id="disclaimer" className="py-20 md:py-24" style={{ backgroundColor: '#000000' }}>
       <div className="terminal-container">
-        <div 
-          className="text-center mb-10 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(15px)' }}
-        >
+        <div className="text-center mb-10">
           <p className="label mb-3">Important Notice</p>
           <h2 className="text-2xl sm:text-3xl font-medium mb-3">Disclaimer & IP Notice</h2>
           <p className="text-sm max-w-md mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
@@ -26,10 +10,7 @@ const Support = () => {
           </p>
         </div>
 
-        <div 
-          className="max-w-2xl mx-auto space-y-4 transition-all duration-700 delay-100"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(15px)' : 'translateY(15px)' }}
-        >
+        <div className="max-w-2xl mx-auto space-y-4">
           <div className="p-6 border" style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
             <div className="flex items-start gap-4">
               <div className="p-2 border flex-shrink-0" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
@@ -85,10 +66,7 @@ const Support = () => {
           </div>
         </div>
 
-        <div 
-          className="mt-10 transition-all duration-700 delay-200"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(15px)' : 'translateY(15px)' }}
-        >
+        <div className="mt-10">
           <p className="text-xs text-center mb-4" style={{ color: 'var(--color-text-muted)' }}>Join Our Community</p>
           <div className="flex justify-center gap-3">
             <a href="https://x.com/i/communities/2027349547975057746" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border text-xs transition-all hover:bg-white hover:text-black" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>

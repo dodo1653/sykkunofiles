@@ -1,37 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
-
 const Token = () => {
-  const [visible, setVisible] = useState(false)
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect() }
-    }, { threshold: 0.1 })
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <section id="token" ref={ref} className="py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--color-terminal-bg)' }}>
+    <section id="token" className="py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--color-terminal-bg)' }}>
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-amber-900/30 to-transparent" />
         <div className="absolute bottom-0 right-0 w-1/3 h-1/2 bg-gradient-to-t from-red-900/20 to-transparent" />
       </div>
       
       <div className="terminal-container relative">
-        <div 
-          className="text-center mb-10 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(15px)' }}
-        >
+        <div className="text-center mb-10">
           <p className="label mb-3">Token</p>
           <h2 className="text-2xl sm:text-3xl font-medium">$KRABS</h2>
         </div>
 
-        <div 
-          className="max-w-xl mx-auto transition-all duration-700 delay-100"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(15px)' : 'translateY(15px)' }}
-        >
+        <div className="max-w-xl mx-auto">
           <div className="p-5 border mb-6 flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.05)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
             <div className="flex items-center gap-3">
               <div className="p-2 border" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
