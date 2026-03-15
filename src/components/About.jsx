@@ -58,10 +58,11 @@ const About = () => {
           className="transition-all duration-700 ease-out delay-100 mb-10"
           style={{ opacity: visible ? 1 : 0 }}
         >
-          <h2 className="text-2xl md:text-3xl font-semibold mb-4" style={{ fontFamily: '"Space Mono", monospace' }}>Built Different</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-4" style={{ fontFamily: '"Space Mono", monospace' }}>More Than Just A Meme</h2>
           <p className="max-w-lg" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: '"Space Mono", monospace' }}>
-            $CORTISOL is more than a meme. It's a movement. 
-            Dedicated to the culture, the vibe, and the future of meme coins.
+            It's an idea, a cultural movement birthed by Gen Z that's taken the rest of the world by storm. 
+            One of the biggest meme trends of 2026, it's even been mentioned by the White House. 
+            So don't let your cortisol spike; join us.
           </p>
         </div>
 
