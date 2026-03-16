@@ -114,41 +114,6 @@ const Navbar = ({ isPlaying, onPlay, onPause }) => {
           }}
         >
           <div className="flex items-center gap-2">
-            <a 
-              href="#home" 
-              onClick={(e) => handleClick(e, '#home')} 
-              className="group relative"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              <div className="relative h-5 w-24">
-                <span 
-                  className="absolute inset-0 text-sm font-medium block transition-all duration-700"
-                  style={{ 
-                    color: '#fafafa',
-                    fontFamily: '"Space Mono", monospace',
-                    letterSpacing: '0.05em',
-                    transform: isHovering ? 'translateY(-120%)' : 'translateY(0)',
-                    opacity: isHovering ? 0 : 1,
-                  }}
-                >
-                  CORTISOL
-                </span>
-                <span 
-                  className="absolute inset-0 text-sm font-medium block transition-all duration-700"
-                  style={{ 
-                    color: '#14b8a6',
-                    fontFamily: '"Space Mono", monospace',
-                    letterSpacing: '0.05em',
-                    transform: isHovering ? 'translateY(0)' : 'translateY(120%)',
-                    opacity: isHovering ? 1 : 0,
-                  }}
-                >
-                  {marketCap}
-                </span>
-              </div>
-            </a>
-            
             <div 
               className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg overflow-hidden cursor-pointer transition-all duration-300"
               onMouseEnter={handleMusicEnter}
@@ -189,6 +154,41 @@ const Navbar = ({ isPlaying, onPlay, onPause }) => {
                 vibe
               </span>
             </div>
+            
+            <a 
+              href="#home" 
+              onClick={(e) => handleClick(e, '#home')} 
+              className="group relative"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
+              <div className="relative h-5 w-24">
+                <span 
+                  className="absolute inset-0 text-sm font-medium block transition-all duration-700"
+                  style={{ 
+                    color: '#fafafa',
+                    fontFamily: '"Space Mono", monospace',
+                    letterSpacing: '0.05em',
+                    transform: isHovering ? 'translateY(-120%)' : 'translateY(0)',
+                    opacity: isHovering ? 0 : 1,
+                  }}
+                >
+                  CORTISOL
+                </span>
+                <span 
+                  className="absolute inset-0 text-sm font-medium block transition-all duration-700"
+                  style={{ 
+                    color: '#14b8a6',
+                    fontFamily: '"Space Mono", monospace',
+                    letterSpacing: '0.05em',
+                    transform: isHovering ? 'translateY(0)' : 'translateY(120%)',
+                    opacity: isHovering ? 1 : 0,
+                  }}
+                >
+                  {marketCap}
+                </span>
+              </div>
+            </a>
           </div>
 
           <div className="hidden md:flex items-center gap-1">
