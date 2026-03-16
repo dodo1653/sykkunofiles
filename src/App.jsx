@@ -14,6 +14,7 @@ function App() {
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showPlaying, setShowPlaying] = useState(false)
+  const canvasRef = useRef(null)
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -61,6 +62,56 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!showPlaying || !canvasRef.current) return
+    
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    
+    const particles = []
+    const particleCount = 80
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        speed: Math.random() * 2 + 1,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.5 + 0.2,
+        color: Math.random() > 0.5 ? '20, 184, 166' : '168, 85, 247'
+      })
+    }
+    
+    let animationId
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      particles.forEach(p => {
+        p.y += p.speed
+        if (p.y > canvas.height) {
+          p.y = -10
+          p.x = Math.random() * canvas.width
+        }
+        
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`
+        ctx.fill()
+      })
+      
+      animationId = requestAnimationFrame(animate)
+    }
+    
+    animate()
+    
+    return () => {
+      cancelAnimationFrame(animationId)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+  }, [showPlaying])
+
   const toggleAudio = () => {
     if (!audioRef.current) return
     
@@ -102,25 +153,14 @@ function App() {
   return (
     <div className="min-h-screen relative">
       {showPlaying && (
-        <div 
+        <canvas 
+          ref={canvasRef}
           className="fixed inset-0 pointer-events-none z-0"
           style={{
-            opacity: isPlaying ? 1 : 0,
+            opacity: isPlaying ? 0.6 : 0,
             transition: 'opacity 0.8s ease',
           }}
-        >
-          <div className="absolute inset-0 animate-pulse-slow" style={{
-            background: 'radial-gradient(ellipse at 20% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%)',
-          }} />
-          <div className="absolute inset-0 animate-pulse-slow" style={{
-            animationDelay: '5s',
-            background: 'radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 50%)',
-          }} />
-          <div className="absolute inset-0 animate-pulse-slow" style={{
-            animationDelay: '10s',
-            background: 'radial-gradient(ellipse at 50% 50%, rgba(20, 184, 166, 0.08) 0%, transparent 60%)',
-          }} />
-        </div>
+        />
       )}
       
       <audio ref={audioRef} src="/tiktok-audio.mp3" preload="auto" loop />
