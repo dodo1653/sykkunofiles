@@ -26,6 +26,9 @@ function App() {
       .then(res => res.blob())
       .then(blob => {
         audioUrlRef.current = URL.createObjectURL(blob)
+        if (audioRef.current) {
+          audioRef.current.src = audioUrlRef.current
+        }
       })
       .catch(() => {})
 
@@ -54,19 +57,19 @@ function App() {
 
   const playAudio = () => {
     if (!audioRef.current) return
-    const src = audioUrlRef.current || '/tiktok-audio.mp3'
-    audioRef.current.src = src
-    audioRef.current.volume = 0.5
-    audioRef.current.play().then(() => {
-      setIsPlaying(true)
-    }).catch(() => {})
+    if (audioRef.current.paused) {
+      audioRef.current.volume = 0.5
+      audioRef.current.play().then(() => {
+        setIsPlaying(true)
+      }).catch(() => {})
+    }
   }
 
   const pauseAudio = () => {
     if (!audioRef.current) return
     setIsPlaying(false)
     audioRef.current.pause()
-    audioRef.current.volume = 0
+    audioRef.current.currentTime = 0
   }
 
   return (
