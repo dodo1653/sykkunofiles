@@ -200,29 +200,13 @@ const Swap = () => {
     <div className="min-h-screen flex flex-col selection:bg-teal-500/30 relative" style={{ background: '#050505' }}>
       <Navbar />
       
-      {/* Beta / Locked Overlay */}
-      <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative px-8 py-4 rounded-2xl bg-black border border-teal-500/30 shadow-[0_0_50px_rgba(20,184,166,0.2)] flex flex-col items-center gap-2 pointer-events-auto"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-teal-500">Liquidity_Beta_Locked</span>
-          </div>
-          <p className="text-[9px] text-white/40 uppercase tracking-[0.2em] font-bold">Exchange Interface Restricted // Live Soon</p>
-        </motion.div>
-      </div>
-
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-40 grayscale-[0.5]">
+      <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 50%)' }} />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 70% 80%, rgba(13, 148, 136, 0.05) 0%, transparent 50%)' }} />
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, mixBlendMode: 'overlay' }} />
       </div>
 
-      <header className="relative z-50 flex items-center justify-between px-8 py-6 opacity-40 grayscale-[0.5] pointer-events-none">
+      <header className="relative z-50 flex items-center justify-between px-8 py-6">
         <motion.a 
           href="/" 
           initial={{ opacity: 0, x: -20 }}
@@ -256,7 +240,7 @@ const Swap = () => {
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-6 relative z-10 opacity-40 grayscale-[0.5] pointer-events-none">
+      <main className="flex-1 flex items-center justify-center p-6 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-[440px] relative">
           <AnimatePresence>
             {swapStatus.message && (
@@ -394,7 +378,7 @@ const Swap = () => {
         </AnimatePresence>
       </main>
 
-      <footer className="relative z-10 px-8 py-8 flex justify-between items-center border-t border-white/5 opacity-40 grayscale-[0.5] pointer-events-none">
+      <footer className="relative z-10 px-8 py-8 flex justify-between items-center border-t border-white/5">
         <span className="text-[10px] font-bold text-white/10 uppercase tracking-widest">Protocol V1.0.4</span>
         <p className="text-[10px] font-bold text-white/10 uppercase tracking-widest">Secured by Jupiter</p>
       </footer>
