@@ -153,11 +153,19 @@ const Studio = () => {
     <div className="min-h-screen bg-[#050505] text-white flex flex-col font-['Space_Mono']">
       <header className="border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-teal-500">C</span>
-            </div>
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-white/80">Cortisol Studio</span>
+          <div className="flex items-center gap-4">
+            <a href="/" className="flex items-center gap-3 group">
+              <div className="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center group-hover:bg-teal-500/20 transition-colors">
+                <span className="text-[10px] font-bold text-teal-500">C</span>
+              </div>
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-white/80">Cortisol Studio</span>
+            </a>
+            <a href="/" className="text-[10px] text-white/30 hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Back
+            </a>
           </div>
           <span className="text-[10px] text-white/20 uppercase tracking-widest">Asset Generator</span>
         </div>
