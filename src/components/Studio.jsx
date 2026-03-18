@@ -18,14 +18,17 @@ const Studio = () => {
     text: 'CORTISOL'
   })
   const [isDraggingWatermark, setIsDraggingWatermark] = useState(false)
-  const [selectedAsset, setSelectedAsset] = useState(null)
+  const [selectedAsset, setSelectedAsset] = useState('text')
 
   const assets = [
-    { id: 'none', name: 'None', icon: '○' },
-    { id: 'gauge', name: 'Gauge', icon: '◠' },
-    { id: 'frame', name: 'Frame', icon: '□' },
-    { id: 'corner', name: 'Corner', icon: 'L' },
+    { id: 'text', name: 'Text', icon: 'T', preview: null },
+    { id: 'img1', name: 'Style 1', icon: '1', preview: '/ChatGPT Image Mar 18, 2026, 04_09_03 AM.png' },
+    { id: 'img2', name: 'Style 2', icon: '2', preview: '/ChatGPT Image Mar 18, 2026, 04_06_55 AM.png' },
+    { id: 'img3', name: 'Style 3', icon: '3', preview: '/theme.png' },
+    { id: 'img4', name: 'Banner', icon: '4', preview: '/cortisol_banner_under_5mb.jpg' },
   ]
+
+  const assetImages = {}
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
@@ -60,6 +63,20 @@ const Studio = () => {
       drawCanvas()
     }
   }, [image, watermark, selectedAsset])
+
+  useEffect(() => {
+    const preloadImages = () => {
+      assets.forEach(asset => {
+        if (asset.preview && !assetImages[asset.id]) {
+          const img = new Image()
+          img.crossOrigin = 'anonymous'
+          img.src = asset.preview
+          assetImages[asset.id] = img
+        }
+      })
+    }
+    preloadImages()
+  }, [])
 
   const drawCanvas = () => {
     const canvas = canvasRef.current
@@ -103,7 +120,7 @@ const Studio = () => {
     ctx.save()
     ctx.globalAlpha = watermark.opacity
     
-    if (selectedAsset === 'none' || !selectedAsset) {
+    if (selectedAsset === 'text') {
       ctx.font = `bold ${size * 0.25}px "Space Mono", monospace`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
@@ -112,48 +129,10 @@ const Studio = () => {
       ctx.strokeText(watermark.text, x, y)
       ctx.fillStyle = '#14b8a6'
       ctx.fillText(watermark.text, x, y)
-    } else if (selectedAsset === 'gauge') {
-      ctx.beginPath()
-      ctx.arc(x, y, size / 2, Math.PI, 0)
-      ctx.strokeStyle = '#14b8a6'
-      ctx.lineWidth = 6
-      ctx.stroke()
-      ctx.rotate(-Math.PI / 4)
-      ctx.beginPath()
-      ctx.moveTo(x, y)
-      ctx.lineTo(x, y - size / 2 + 8)
-      ctx.strokeStyle = '#fff'
-      ctx.lineWidth = 2
-      ctx.stroke()
-      ctx.rotate(Math.PI / 4)
-      ctx.font = `bold ${size * 0.15}px "Space Mono"`
-      ctx.textAlign = 'center'
-      ctx.fillStyle = '#14b8a6'
-      ctx.fillText(watermark.text, x, y + size * 0.35)
-    } else if (selectedAsset === 'frame') {
-      const frameSize = size * 0.8
-      ctx.strokeStyle = '#14b8a6'
-      ctx.lineWidth = 3
-      ctx.strokeRect(x - frameSize/2, y - frameSize/2, frameSize, frameSize)
-      ctx.font = `bold ${size * 0.18}px "Space Mono"`
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillStyle = '#14b8a6'
-      ctx.fillText(watermark.text, x, y)
-    } else if (selectedAsset === 'corner') {
-      const cornerSize = size * 0.6
-      ctx.strokeStyle = '#14b8a6'
-      ctx.lineWidth = 3
-      ctx.beginPath()
-      ctx.moveTo(x, y + cornerSize)
-      ctx.lineTo(x, y)
-      ctx.lineTo(x + cornerSize, y)
-      ctx.stroke()
-      ctx.font = `bold ${size * 0.2}px "Space Mono"`
-      ctx.textAlign = 'left'
-      ctx.textBaseline = 'bottom'
-      ctx.fillStyle = '#14b8a6'
-      ctx.fillText(watermark.text, x + cornerSize + 8, y + cornerSize/2)
+    } else if (assetImages[selectedAsset]) {
+      const img = assetImages[selectedAsset]
+      const imgSize = size * 1.5
+      ctx.drawImage(img, x - imgSize/2, y - imgSize/2, imgSize, imgSize)
     }
     
     ctx.restore()
@@ -234,17 +213,21 @@ const Studio = () => {
                     <button
                       key={asset.id}
                       onClick={() => setSelectedAsset(asset.id)}
-                      className={`aspect-square rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${
+                      className={`aspect-square rounded-xl flex items-center justify-center overflow-hidden transition-all ${
                         selectedAsset === asset.id
-                          ? 'bg-teal-500/20 border border-teal-500/50 text-teal-500'
-                          : 'bg-white/5 border border-white/10 text-white/40 hover:bg-white/10 hover:text-white/60'
+                          ? 'bg-teal-500/20 border-2 border-teal-500'
+                          : 'bg-white/5 border border-white/10 hover:bg-white/10'
                       }`}
                     >
-                      <span className="text-sm">{asset.icon}</span>
-                      <span className="text-[7px] uppercase tracking-wider">{asset.name}</span>
+                      {asset.preview ? (
+                        <img src={asset.preview} alt={asset.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-sm font-bold text-teal-500">{asset.icon}</span>
+                      )}
                     </button>
                   ))}
                 </div>
+                <p className="text-[8px] text-white/30 text-center uppercase tracking-wider">Click to select asset style</p>
               </div>
 
               <div className="space-y-3">
