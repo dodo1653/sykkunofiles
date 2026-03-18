@@ -22,10 +22,6 @@ const Studio = () => {
 
   const assets = [
     { id: 'text', name: 'Text', icon: 'T', preview: null },
-    { id: 'img1', name: 'Style 1', icon: '1', preview: '/ChatGPT Image Mar 18, 2026, 04_09_03 AM.png' },
-    { id: 'img2', name: 'Style 2', icon: '2', preview: '/ChatGPT Image Mar 18, 2026, 04_06_55 AM.png' },
-    { id: 'img3', name: 'Style 3', icon: '3', preview: '/theme.png' },
-    { id: 'img4', name: 'Banner', icon: '4', preview: '/cortisol_banner_under_5mb.jpg' },
   ]
 
   const assetImagesRef = useRef({})
@@ -129,12 +125,6 @@ const Studio = () => {
       ctx.strokeText(watermark.text, x, y)
       ctx.fillStyle = '#14b8a6'
       ctx.fillText(watermark.text, x, y)
-    } else if (assetImagesRef.current[selectedAsset]) {
-      const img = assetImagesRef.current[selectedAsset]
-      if (img.complete) {
-        const imgSize = size * 1.5
-        ctx.drawImage(img, x - imgSize/2, y - imgSize/2, imgSize, imgSize)
-      }
     }
     
     ctx.restore()
@@ -208,30 +198,6 @@ const Studio = () => {
             <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-white/40 mb-6">Customize</h2>
             
             <div className="space-y-6">
-              <div className="space-y-3">
-                <label className="text-[10px] uppercase tracking-widest text-white/40 block">Assets</label>
-                <div className="grid grid-cols-4 gap-2">
-                  {assets.map(asset => (
-                    <button
-                      key={asset.id}
-                      onClick={() => setSelectedAsset(asset.id)}
-                      className={`aspect-square rounded-xl flex items-center justify-center overflow-hidden transition-all ${
-                        selectedAsset === asset.id
-                          ? 'bg-teal-500/20 border-2 border-teal-500'
-                          : 'bg-white/5 border border-white/10 hover:bg-white/10'
-                      }`}
-                    >
-                      {asset.preview ? (
-                        <img src={asset.preview} alt={asset.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-sm font-bold text-teal-500">{asset.icon}</span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-[8px] text-white/30 text-center uppercase tracking-wider">Click to select asset style</p>
-              </div>
-
               <div className="space-y-3">
                 <label className="text-[10px] uppercase tracking-widest text-white/40 block">Watermark Text</label>
                 <input 
