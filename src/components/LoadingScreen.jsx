@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion'
 
 const LoadingScreen = ({ progress }) => {
-  // Needle rotation calculation (from -90deg to +90deg)
   const rotation = (progress / 100) * 180 - 90
-  
-  // High-frequency jitter for "High Cortisol" feel
   const jitter = progress > 80 ? (progress - 80) / 20 : 0
 
   return (
@@ -16,94 +13,165 @@ const LoadingScreen = ({ progress }) => {
         scale: 1.05,
         transition: { duration: 1, ease: [0.4, 0, 0.2, 1] }
       }}
-      className="fixed inset-0 z-[2000] flex items-center justify-center bg-[#050505] overflow-hidden"
+      className="fixed inset-0 z-[2000] flex items-center justify-center overflow-hidden"
+      style={{ background: '#030303' }}
     >
       <div className="relative flex flex-col items-center">
-        {/* Iconic Minimalist Cortisol Gauge */}
-        <div className="relative w-64 h-32 flex items-end justify-center">
+        {/* Cortisol Gauge - Viral Style */}
+        <div className="relative w-72 h-36 flex items-end justify-center">
           <svg className="absolute bottom-0 w-full overflow-visible" viewBox="0 0 200 100">
             <defs>
-              <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.2" />
-                <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#14b8a6" stopOpacity="1" />
+              {/* Gradient from green (low) to red (high) */}
+              <linearGradient id="cortisolGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.9" />
+                <stop offset="35%" stopColor="#eab308" stopOpacity="0.9" />
+                <stop offset="70%" stopColor="#f97316" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#ef4444" stopOpacity="0.9" />
               </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
             
-            {/* Main Track */}
+            {/* Background Track - Dark with subtle gradient */}
             <path
               d="M20,100 A80,80 0 0,1 180,100"
               fill="none"
-              stroke="rgba(255,255,255,0.03)"
-              strokeWidth="1.5"
+              stroke="rgba(255,255,255,0.06)"
+              strokeWidth="3"
               strokeLinecap="round"
             />
             
-            {/* Active Progress Line (Thin & Sharp) */}
+            {/* Zone Labels */}
+            <text x="30" y="75" fill="rgba(34,197,94,0.5)" fontSize="6" fontFamily="monospace">LOW</text>
+            <text x="155" y="75" fill="rgba(239,68,68,0.5)" fontSize="6" fontFamily="monospace">HIGH</text>
+            
+            {/* Active Progress Arc */}
             <motion.path
               d="M20,100 A80,80 0 0,1 180,100"
               fill="none"
-              stroke="#14b8a6"
-              strokeWidth="2"
+              stroke="url(#cortisolGradient)"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray="251.32"
+              filter="url(#glow)"
               animate={{ 
                 strokeDashoffset: 251.32 - (progress / 100) * 251.32 
               }}
-              transition={{ type: 'spring', damping: 30, stiffness: 50 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 60 }}
             />
 
-            {/* Scale Markers (Minimal) */}
+            {/* Scale Markers */}
             {[0, 25, 50, 75, 100].map((mark) => {
               const ang = (mark / 100) * 180 - 180
-              const x1 = 100 + Math.cos((ang * Math.PI) / 180) * 85
-              const y1 = 100 + Math.sin((ang * Math.PI) / 180) * 85
-              const x2 = 100 + Math.cos((ang * Math.PI) / 180) * 92
-              const y2 = 100 + Math.sin((ang * Math.PI) / 180) * 92
+              const x1 = 100 + Math.cos((ang * Math.PI) / 180) * 88
+              const y1 = 100 + Math.sin((ang * Math.PI) / 180) * 88
+              const x2 = 100 + Math.cos((ang * Math.PI) / 180) * 95
+              const y2 = 100 + Math.sin((ang * Math.PI) / 180) * 95
               return (
                 <line
                   key={mark}
                   x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="rgba(255,255,255,0.1)"
+                  stroke="rgba(255,255,255,0.15)"
                   strokeWidth="1"
                 />
               )
             })}
           </svg>
 
-          {/* Precision Sharp Needle */}
+          {/* Needle - Sleek & Sharp */}
           <motion.div
-            className="absolute bottom-[-2px] w-[1px] h-32 bg-white origin-bottom z-20"
+            className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 origin-bottom z-20"
             style={{ 
-              boxShadow: '0 0 10px rgba(255,255,255,0.3)'
+              width: '2px',
+              height: '80px',
+              background: 'linear-gradient(to top, #fff 0%, rgba(255,255,255,0.3) 100%)',
+              boxShadow: '0 0 15px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.2)',
             }}
             animate={{ 
               rotate: rotation,
-              x: [0, -jitter, jitter, 0],
+              x: [0, jitter, -jitter, 0],
             }}
             transition={{ 
-              rotate: { type: 'spring', damping: 20, stiffness: 40 },
-              x: { duration: 0.05, repeat: Infinity }
+              rotate: { type: 'spring', damping: 18, stiffness: 45 },
+              x: { duration: 0.03, repeat: Infinity }
             }}
           >
-            {/* Sharp Tip */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[3px] h-[3px] bg-white rounded-full" />
+            {/* Needle tip glow */}
+            <div 
+              className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+              style={{ 
+                background: '#fff',
+                boxShadow: '0 0 20px #fff, 0 0 40px rgba(255,255,255,0.8)',
+              }}
+            />
           </motion.div>
 
-          {/* Pivot Base (Tiny & Sharp) */}
-          <div className="absolute bottom-[-4px] w-3 h-3 bg-[#050505] border border-white/20 rounded-full z-30" />
+          {/* Pivot - Minimal dot */}
+          <div 
+            className="absolute bottom-[-8px] w-4 h-4 rounded-full z-30"
+            style={{ 
+              background: '#030303',
+              border: '2px solid rgba(255,255,255,0.3)',
+              boxShadow: '0 0 20px rgba(255,255,255,0.2)',
+            }}
+          />
         </div>
 
-        {/* Ambient Underglow (Very Subtle) */}
+        {/* Status Text */}
+        <motion.div
+          className="mt-8 text-center"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <p 
+            className="text-[9px] uppercase tracking-[0.5em] font-bold"
+            style={{ 
+              color: 'rgba(255,255,255,0.3)',
+              fontFamily: 'monospace',
+            }}
+          >
+            {progress < 100 ? 'Calibrating...' : 'Ready'}
+          </p>
+        </motion.div>
+
+        {/* Ambient Glow */}
         <motion.div 
-          animate={{ opacity: [0.05, 0.1, 0.05] }}
-          transition={{ duration: 4, repeat: Infinity }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-teal-500/5 blur-[80px] -z-10 rounded-full" 
+          animate={{ opacity: [0.08, 0.15, 0.08] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80"
+          style={{
+            background: 'radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
         />
       </div>
 
-      {/* Deep Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.4)_100%)] pointer-events-none" />
+      {/* Vignette */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
+        }}
+      />
+
+      {/* Scanline Effect - Subtle */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,0.03) 2px,
+            rgba(255,255,255,0.03) 4px
+          )`,
+        }}
+      />
     </motion.div>
   )
 }

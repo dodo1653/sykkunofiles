@@ -4,6 +4,7 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PublicKey, VersionedTransaction } from '@solana/web3.js'
 import { Buffer } from 'buffer'
+import Navbar from './Navbar'
 
 const CORTISOL_TOKEN_ADDRESS = '9AyLH5Puifc7v9MkTgA36JabS4wiVTEZ3aEPeNoTpump'
 const SOL_MINT = 'So11111111111111111111111111111111111111112'
@@ -168,105 +169,8 @@ const Swap = () => {
   }
 
   const executeSwap = async () => {
-    if (!connected || !publicKey || !fromAmount || !fromToken || !toToken) {
-      setSwapStatus({ type: 'error', message: 'Please connect wallet and enter amount' })
-      return
-    }
-    
-    setIsSwapping(true)
-    setSwapStatus({ type: 'loading', message: 'Fetching best route...' })
-    
-    try {
-      const inputAmount = Math.floor(parseFloat(fromAmount) * Math.pow(10, fromToken.decimals))
-      
-      const slippageBps = Math.round(slippage * 100)
-      const quoteResponse = await fetch(
-        `https://quote-api.jup.ag/v6/quote?inputMint=${fromToken.address}&outputMint=${toToken.address}&amount=${inputAmount}&slippageBps=${slippageBps}&onlyDirectRoutes=false`
-      )
-      
-      if (!quoteResponse.ok) {
-        const errorData = await quoteResponse.json()
-        throw new Error(errorData.error || 'Failed to fetch quote')
-      }
-      const quoteData = await quoteResponse.json()
-      
-      setSwapStatus({ type: 'loading', message: 'Preparing transaction...' })
-      
-      const swapResponse = await fetch('https://quote-api.jup.ag/v6/swap', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          quoteResponse: quoteData,
-          userPublicKey: publicKey.toString(),
-          wrapAndUnwrapSol: true,
-          dynamicComputeUnitLimit: true,
-          prioritizationFeeLamports: 'auto'
-        })
-      })
-      
-      if (!swapResponse.ok) {
-        const errorData = await swapResponse.json()
-        throw new Error(errorData.error || 'Failed to prepare swap')
-      }
-      const { swapTransaction } = await swapResponse.json()
-      
-      setSwapStatus({ type: 'loading', message: 'Waiting for signature...' })
-      const swapTransactionBuf = Buffer.from(swapTransaction, 'base64')
-      const transaction = VersionedTransaction.deserialize(swapTransactionBuf)
-      
-      const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('confirmed')
-      transaction.message.recentBlockhash = blockhash
-      
-      const signedTransaction = await signTransaction(transaction)
-      
-      setSwapStatus({ type: 'loading', message: 'Sending to Solana...' })
-      const rawTransaction = signedTransaction.serialize()
-      const txid = await connection.sendRawTransaction(rawTransaction, {
-        skipPreflight: true,
-        maxRetries: 3
-      })
-      
-      setSwapStatus({ type: 'loading', message: 'Confirming swap...' })
-      
-      await connection.confirmTransaction({
-        signature: txid,
-        blockhash: blockhash,
-        lastValidBlockHeight: lastValidBlockHeight
-      }, 'confirmed')
-      
-      setSwapStatus({ type: 'success', message: 'Swap successful!' })
-      fetchBalances()
-      setFromAmount('')
-      setTimeout(() => setSwapStatus({ type: '', message: '' }), 6000)
-    } catch (err) {
-      console.error('Swap error:', err)
-      let errorMsg = err.message || 'Swap execution failed'
-      
-      if (err.name === 'WalletSignTransactionError' || err.message?.includes('User rejected')) {
-        errorMsg = 'Transaction cancelled'
-      }
-      
-      setSwapStatus({ 
-        type: 'error', 
-        message: (
-          <div className="flex flex-col gap-2">
-            <span>{errorMsg}</span>
-            <button 
-              onClick={() => {
-                const url = `https://pump.fun/swap?inputMint=${fromToken.address}&outputMint=${toToken.address}`
-                window.open(url, '_blank')
-              }}
-              className="text-[8px] underline opacity-50 hover:opacity-100 uppercase"
-            >
-              Try on Pump.fun instead
-            </button>
-          </div>
-        )
-      })
-      setTimeout(() => setSwapStatus({ type: '', message: '' }), 10000)
-    } finally {
-      setIsSwapping(false)
-    }
+    // Locked for Beta
+    return
   }
 
   const selectToken = (token, side) => {
@@ -293,14 +197,32 @@ const Swap = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-teal-500/30" style={{ background: '#050505' }}>
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen flex flex-col selection:bg-teal-500/30 relative" style={{ background: '#050505' }}>
+      <Navbar />
+      
+      {/* Beta / Locked Overlay */}
+      <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative px-8 py-4 rounded-2xl bg-black border border-teal-500/30 shadow-[0_0_50px_rgba(20,184,166,0.2)] flex flex-col items-center gap-2 pointer-events-auto"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-teal-500">Liquidity_Beta_Locked</span>
+          </div>
+          <p className="text-[9px] text-white/40 uppercase tracking-[0.2em] font-bold">Exchange Interface Restricted // Live Soon</p>
+        </motion.div>
+      </div>
+
+      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-40 grayscale-[0.5]">
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 50%)' }} />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 70% 80%, rgba(13, 148, 136, 0.05) 0%, transparent 50%)' }} />
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, mixBlendMode: 'overlay' }} />
       </div>
 
-      <header className="relative z-50 flex items-center justify-between px-8 py-6">
+      <header className="relative z-50 flex items-center justify-between px-8 py-6 opacity-40 grayscale-[0.5] pointer-events-none">
         <motion.a 
           href="/" 
           initial={{ opacity: 0, x: -20 }}
@@ -334,7 +256,7 @@ const Swap = () => {
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-6 relative z-10">
+      <main className="flex-1 flex items-center justify-center p-6 relative z-10 opacity-40 grayscale-[0.5] pointer-events-none">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-[440px] relative">
           <AnimatePresence>
             {swapStatus.message && (
@@ -439,8 +361,8 @@ const Swap = () => {
                 )}
               </div>
 
-              <button onClick={executeSwap} disabled={!fromAmount || isSwapping || !connected} className="w-full mt-10 py-5 rounded-[20px] font-bold text-[11px] uppercase tracking-[0.3em] transition-all duration-500 disabled:opacity-20 disabled:grayscale relative overflow-hidden group" style={{ background: 'white', color: 'black' }}>
-                <span className="relative z-10">{!connected ? 'Connect Wallet' : isSwapping ? 'Swapping...' : !fromAmount ? 'Enter Amount' : 'Execute Swap'}</span>
+              <button onClick={executeSwap} disabled={true} className="w-full mt-10 py-5 rounded-[20px] font-bold text-[11px] uppercase tracking-[0.3em] transition-all duration-500 disabled:opacity-20 disabled:grayscale relative overflow-hidden group" style={{ background: 'white', color: 'black' }}>
+                <span className="relative z-10">BETA LOCKED</span>
                 <div className="absolute inset-0 bg-teal-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </button>
             </div>
@@ -472,7 +394,7 @@ const Swap = () => {
         </AnimatePresence>
       </main>
 
-      <footer className="relative z-10 px-8 py-8 flex justify-between items-center border-t border-white/5">
+      <footer className="relative z-10 px-8 py-8 flex justify-between items-center border-t border-white/5 opacity-40 grayscale-[0.5] pointer-events-none">
         <span className="text-[10px] font-bold text-white/10 uppercase tracking-widest">Protocol V1.0.4</span>
         <p className="text-[10px] font-bold text-white/10 uppercase tracking-widest">Secured by Jupiter</p>
       </footer>
