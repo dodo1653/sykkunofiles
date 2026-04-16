@@ -185,7 +185,7 @@ function App() {
               </div>
               <div className="bg-black/50 p-3 rounded col-span-2 md:col-span-1">
                 <p className="text-white/40 mb-1">CONTRACT</p>
-                <p className="text-sm font-mono">Coming soon...</p>
+                <p className="text-sm font-mono select-all">WJp5bC6GERNoH7UHE4a1DM47MHcknnUfSDwL7t1pump</p>
               </div>
             </div>
           </div>
