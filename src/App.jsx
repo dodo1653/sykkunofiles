@@ -48,13 +48,19 @@ function App() {
     { date: 'NOW', event: 'Sykkuno has NOT responded - full silence' }
   ]
 
+  const viralStats = [
+    { platform: 'YouTube', video: 'The Sykkuno Files', views: '1.1M' },
+    { platform: 'YouTube', video: 'Mujin Exposé', views: '4M+' },
+    { platform: 'X/Twitter', hashtag: '#Sykkuno', posts: '24K+' }
+  ]
+
   return (
-    <div className="min-h-screen bg-black text-white font-['Courier_New']">
+    <div className="min-h-screen bg-black text-white font-['Courier_New']" style={{ cursor: 'default' }}>
       <motion.div 
         initial={{ opacity: 1 }}
         animate={{ opacity: isLoaded ? 0 : 1 }}
         transition={{ duration: 0.5 }}
-        className="fixed inset-0 z-[2000] bg-black flex items-center justify-center"
+        className="fixed inset-0 z-[9999] bg-black flex items-center justify-center pointer-events-auto"
       >
         <motion.div
           animate={{ opacity: [0.3, 1, 0.3] }}
@@ -74,37 +80,37 @@ function App() {
               <p className="text-xs text-white/50">DOCUMENT ARCHIVE // APRIL 2026</p>
             </div>
           </div>
-          <div className="text-xs text-white/40">
-            STATUS: ACTIVE
+          <div className="text-xs text-red-400">
+            ACTIVE INVESTIGATION
           </div>
         </div>
       </header>
 
       <div className="bg-white/5 border-b border-white/10 py-3 px-8">
         <div className="max-w-4xl mx-auto flex gap-6 text-xs">
+          <div><span className="text-white/50">VIRAL REACH:</span> <span className="text-white">5M+</span></div>
           <div><span className="text-white/50">EVIDENCE:</span> <span className="text-white">{evidenceLinks.length}</span></div>
-          <div><span className="text-white/50">SUBJECTS:</span> <span className="text-white">{subjects.length}</span></div>
           <div><span className="text-white/50">UPDATED:</span> <span className="text-white">APRIL 14, 2026</span></div>
         </div>
       </div>
 
       <main className="max-w-4xl mx-auto p-8">
-        <section className="mb-12">
-          <div className="bg-white/5 border border-white/20 p-6 rounded-lg">
-            <h2 className="text-lg font-bold mb-4">CASE SUMMARY</h2>
-            <p className="text-sm text-white/70 leading-relaxed mb-4">
+        <section className="mb-10">
+          <div className="bg-white/5 border border-white/20 p-5 rounded-lg">
+            <h2 className="text-lg font-bold mb-3">CASE SUMMARY</h2>
+            <p className="text-sm text-white/70 leading-relaxed mb-3">
               April 10, 2026: VTuber Hemomal released a 32-page document exposing Sykkuno (Thomas, 34) as a 
               "serial cheater, liar, and manipulator." Evidence includes screenshots, PayPal payment records, 
               timeline, and voice recording. Sykkuno has NOT responded publicly - complete silence.
             </p>
-            <div className="flex gap-4 text-xs">
-              <span className="bg-white/10 px-2 py-1 rounded">TOKEN: $SYYKUNO</span>
-              <span className="bg-white/10 px-2 py-1 rounded">CHAIN: SOLANA</span>
+            <div className="flex gap-3 text-xs">
+              <span className="bg-white/10 px-2 py-1 rounded">$SYYKUNO</span>
+              <span className="bg-white/10 px-2 py-1 rounded">SOLANA</span>
             </div>
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-10">
           <h3 className="text-sm font-bold text-white/50 mb-4 tracking-widest">EVIDENCE LINKS</h3>
           <div className="space-y-2">
             {evidenceLinks.map((link) => (
@@ -113,55 +119,84 @@ function App() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block bg-white/5 border border-white/10 hover:border-white/30 p-3 rounded transition-colors"
+                className="block bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 p-3 rounded transition-all cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
               >
-                <span className="text-sm">{link.title}</span>
+                <span className="text-sm text-white/80 hover:text-white">{link.title}</span>
               </a>
             ))}
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-10">
           <h3 className="text-sm font-bold text-white/50 mb-4 tracking-widest">SUBJECTS</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {subjects.map((subject, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 p-4 rounded">
-                <div className="flex justify-between items-start mb-2">
+              <div key={i} className="bg-white/5 border border-white/10 p-3 rounded">
+                <div className="flex justify-between items-start mb-1">
                   <span className="font-bold text-sm">{subject.name}</span>
                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded">{subject.status}</span>
                 </div>
-                <p className="text-xs text-white/50 mb-1">{subject.role}</p>
-                <p className="text-xs text-white/40">{subject.bio}</p>
+                <p className="text-xs text-white/50">{subject.role}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-10">
           <h3 className="text-sm font-bold text-white/50 mb-4 tracking-widest">TIMELINE</h3>
-          <div className="border-l-2 border-white/20 ml-4 space-y-6">
+          <div className="border-l border-white/20 ml-4 space-y-4">
             {timeline.map((item, i) => (
-              <div key={i} className="relative pl-6">
-                <div className="absolute left-0 top-1 w-2 h-2 bg-white/40 rounded-full -translate-x-[5px]" />
-                <div className="text-sm font-mono text-white/40 mb-1">{item.date}</div>
-                <div className="text-sm text-white/70">{item.event}</div>
+              <div key={i} className="relative pl-4">
+                <div className="absolute left-0 top-1 w-2 h-2 bg-white/40 rounded-full" />
+                <div className="text-sm text-white/40 mb-0.5">{item.date}</div>
+                <div className="text-sm text-white/60">{item.event}</div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-10">
           <h3 className="text-sm font-bold text-white/50 mb-4 tracking-widest">SEARCH SOCIAL MEDIA</h3>
           <div className="flex flex-wrap gap-2">
-            <a href="https://x.com/search?q=sykkuno" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">Search X</a>
-            <a href="https://www.tiktok.com/discover/sykkuno" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">Search TikTok</a>
-            <a href="https://www.youtube.com/results?search_query=sykkuno+scandal" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">Search YouTube</a>
-            <a href="https://www.reddit.com/search/?q=sykkuno+allegations" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">Search Reddit</a>
-            <a href="https://www.google.com/search?q=sykkuno+scandal" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">Search Google</a>
+            <a href="https://x.com/search?q=sykkuno" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded cursor-pointer" style={{ pointerEvents: 'auto' }}>Search X</a>
+            <a href="https://www.tiktok.com/discover/sykkuno" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded cursor-pointer" style={{ pointerEvents: 'auto' }}>Search TikTok</a>
+            <a href="https://www.youtube.com/results?search_query=sykkuno+scandal" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded cursor-pointer" style={{ pointerEvents: 'auto' }}>Search YouTube</a>
+            <a href="https://www.reddit.com/search/?q=sykkuno+allegations" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded cursor-pointer" style={{ pointerEvents: 'auto' }}>Search Reddit</a>
+            <a href="https://www.google.com/search?q=sykkuno+scandal" target="_blank" rel="noopener noreferrer" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded cursor-pointer" style={{ pointerEvents: 'auto' }}>Search Google</a>
           </div>
         </section>
 
-        <footer className="border-t border-white/10 pt-8 text-center">
+        <section className="mb-10">
+          <h3 className="text-sm font-bold text-white/50 mb-4 tracking-widest">VIRAL STATS</h3>
+          <div className="flex gap-4">
+            {viralStats.map((stat, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 p-3 rounded flex-1">
+                <div className="text-xs text-white/40">{stat.platform}</div>
+                <div className="text-sm font-bold">{stat.views || stat.posts}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="bg-white/5 border-b border-white/10 py-3 px-8 mb-8">
+          <div className="max-w-4xl mx-auto flex gap-4 text-xs">
+            {socialLinks.map((link, i) => (
+              <a 
+                key={i}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <footer className="border-t border-white/10 pt-6 text-center">
           <p className="text-xs text-white/30">SYYKUNO FILES // EDUCATIONAL PURPOSES ONLY</p>
         </footer>
       </main>
