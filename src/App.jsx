@@ -62,11 +62,11 @@ function App() {
   ]
 
   const searchEngines = [
-    { name: '🔍 Search X', url: 'https://x.com/search?q=' },
-    { name: '🎵 Search TikTok', url: 'https://www.tiktok.com/search?query=' },
-    { name: '▶ Search YouTube', url: 'https://www.youtube.com/results?search_query=' },
-    { name: '⬡ Search Reddit', url: 'https://www.reddit.com/search/?q=' },
-    { name: 'G Search Google', url: 'https://www.google.com/search?q=' }
+    { name: 'Search X', url: 'https://x.com/search?q=' },
+    { name: 'Search TikTok', url: 'https://www.tiktok.com/search?query=' },
+    { name: 'Search YouTube', url: 'https://www.youtube.com/results?search_query=' },
+    { name: 'Search Reddit', url: 'https://www.reddit.com/search/?q=' },
+    { name: 'Search Google', url: 'https://www.google.com/search?q=' }
   ]
 
   const keyEvidence = [
@@ -92,7 +92,7 @@ function App() {
           transition={{ duration: 1.5, repeat: Infinity }}
           className="text-sm tracking-widest"
         >
-          SYYKUNO FILES // LOADING EVIDENCE...
+          sykkuno FILES // LOADING...
         </motion.div>
       </motion.div>
 
@@ -101,12 +101,12 @@ function App() {
           <div className="flex items-center gap-4">
             <span className="text-3xl">📁</span>
             <div>
-              <h1 className="text-xl font-bold tracking-wider">SYYKUNO FILES</h1>
+              <h1 className="text-xl font-bold tracking-wider">sykkuno FILES</h1>
               <p className="text-xs text-white/50">THE EXPOSÉ THAT BROKE THE INTERNET</p>
             </div>
           </div>
-          <div className="text-xs text-red-400 font-bold">
-            🔴 LIVE INVESTIGATION
+          <div className="text-xs text-white/40 font-bold">
+            LIVE INVESTIGATION
           </div>
         </div>
       </header>
@@ -166,47 +166,33 @@ function App() {
 
       <main className="max-w-6xl mx-auto p-8">
         <section className="mb-12">
-          <div className="bg-red-900/10 border border-red-500/30 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <span className="text-red-400">⚠</span> THE CASE SUMMARY
-            </h2>
+          <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">THE CASE SUMMARY</h2>
             <p className="text-sm text-white/80 leading-relaxed mb-4">
               <strong>April 10, 2026:</strong> VTuber Hemomal released a 32-page document exposing Sykkuno (Thomas, 34) as a 
               "serial cheater, liar, and manipulator." The document includes screenshots, payment records (PayPal €500-€1,550), 
               timeline, and a voice recording where he allegedly admits to everything. Sykkuno has NOT responded publicly 
               as of today - complete silence.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mt-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs mt-4">
               <div className="bg-black/50 p-3 rounded">
                 <p className="text-white/40 mb-1">TOKEN</p>
-                <p className="text-xl font-bold">$SYYKUNO</p>
+                <p className="text-xl font-bold">$sykkuno</p>
               </div>
               <div className="bg-black/50 p-3 rounded">
                 <p className="text-white/40 mb-1">CHAIN</p>
                 <p className="text-xl font-bold">SOLANA</p>
               </div>
-              <div className="bg-black/50 p-3 rounded">
-                <p className="text-white/40 mb-1">VIDEOS CREATED</p>
-                <p className="text-xl font-bold">12+</p>
-              </div>
-              <div className="bg-black/50 p-3 rounded">
-                <p className="text-white/40 mb-1">TOTAL VIEWS</p>
-                <p className="text-xl font-bold">5M+</p>
-              </div>
-              <div className="bg-black/50 p-3 rounded">
-                <p className="text-white/40 mb-1">X POSTS</p>
-                <p className="text-xl font-bold">24K+</p>
-              </div>
-              <div className="bg-black/50 p-3 rounded">
-                <p className="text-white/40 mb-1">SYKKUNO RESPONSE</p>
-                <p className="text-xl font-bold text-red-400">NONE</p>
+              <div className="bg-black/50 p-3 rounded col-span-2 md:col-span-1">
+                <p className="text-white/40 mb-1">CONTRACT</p>
+                <p className="text-sm font-mono">Coming soon...</p>
               </div>
             </div>
           </div>
         </section>
 
         <section className="mb-12">
-          <h3 className="text-sm font-bold text-red-400 mb-4 tracking-widest">// 🔴 PRIMARY EVIDENCE (CLICK TO VIEW)</h3>
+          <h3 className="text-sm font-bold text-red-400 mb-4 tracking-widest">// PRIMARY EVIDENCE (CLICK TO VIEW)</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {evidenceLinks.map((link) => (
               <a 
@@ -283,7 +269,7 @@ function App() {
         </section>
 
         <footer className="border-t border-white/10 pt-8 text-center">
-          <p className="text-xs text-white/30">SYYKUNO FILES // EDUCATIONAL PURPOSES ONLY</p>
+          <p className="text-xs text-white/30">sykkuno FILES // EDUCATIONAL PURPOSES ONLY</p>
           <p className="text-xs text-white/20 mt-2">Compiling publicly available information since April 2026</p>
         </footer>
       </main>
