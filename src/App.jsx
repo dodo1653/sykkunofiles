@@ -80,12 +80,12 @@ function App() {
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white font-['Courier_New']">
+    <div className="min-h-screen bg-black text-white font-['Courier_New']" style={{ pointerEvents: 'auto' }}>
       <motion.div 
         initial={{ opacity: 1 }}
         animate={{ opacity: isLoaded ? 0 : 1 }}
         transition={{ duration: 0.5 }}
-        className="fixed inset-0 z-[2000] bg-black flex items-center justify-center"
+        className="fixed inset-0 z-[2000] bg-black flex items-center justify-center pointer-events-none"
       >
         <motion.div
           animate={{ opacity: [0.3, 1, 0.3] }}
@@ -177,6 +177,14 @@ function App() {
               as of today - complete silence.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mt-4">
+              <div className="bg-black/50 p-3 rounded">
+                <p className="text-white/40 mb-1">TOKEN</p>
+                <p className="text-xl font-bold">$SYYKUNO</p>
+              </div>
+              <div className="bg-black/50 p-3 rounded">
+                <p className="text-white/40 mb-1">CHAIN</p>
+                <p className="text-xl font-bold">SOLANA</p>
+              </div>
               <div className="bg-black/50 p-3 rounded">
                 <p className="text-white/40 mb-1">VIDEOS CREATED</p>
                 <p className="text-xl font-bold">12+</p>
