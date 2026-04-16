@@ -10,9 +10,10 @@ function App() {
 
   const uncsImages = [
     '/uncs/Screenshot 2026-04-16 124019.png',
-    '/uncs/Gemini_Generated_Image_1sq5kp1sq5kp1sq5.png',
+    '/uncs/Gemini_Generated_Image_e9kkuce9kkuce9kk.png',
     '/uncs/Gemini_Generated_Image_2bray82bray82bra.png',
     '/uncs/Gemini_Generated_Image_7uyhwo7uyhwo7uyh.png',
+    '/uncs/Gemini_Generated_Image_yq7m4ryq7m4ryq7m.png',
   ]
 
   const socialLinks = [
@@ -126,7 +127,7 @@ function App() {
         </div>
       </section>
 
-      {/* Gallery - all 4 unique images */}
+      {/* Gallery - all 5 unique images */}
       <section className="py-24 px-8">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs text-white/30 font-mono tracking-widest mb-8 text-center">GALLERY</p>
@@ -134,16 +135,16 @@ function App() {
             <div className="rounded-lg overflow-hidden border border-white/10">
               <img src={uncsImages[1]} alt="Art 1" className="w-full opacity-60 hover:opacity-100 transition-opacity grayscale" />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div className="rounded-lg overflow-hidden border border-white/10 aspect-square">
                 <img src={uncsImages[2]} alt="Art 2" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity grayscale" />
               </div>
               <div className="rounded-lg overflow-hidden border border-white/10 aspect-square">
                 <img src={uncsImages[3]} alt="Art 3" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity grayscale" />
               </div>
-              <div className="rounded-lg overflow-hidden border border-white/10 aspect-square bg-white/5 flex items-center justify-center">
-                <span className="text-xs text-white/30 font-mono">+ MORE</span>
-              </div>
+            </div>
+            <div className="rounded-lg overflow-hidden border border-white/10">
+              <img src={uncsImages[4]} alt="Art 4" className="w-full opacity-60 hover:opacity-100 transition-opacity grayscale" />
             </div>
           </div>
         </div>
