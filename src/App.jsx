@@ -39,6 +39,10 @@ function App() {
       }
     }
 
+    const selectUncsImage = (imgPath) => {
+      setImage(imgPath)
+    }
+
     const downloadMeme = () => {
       const canvas = canvasRef.current
       if (!canvas) return
@@ -63,6 +67,17 @@ function App() {
             <div>
               <label className="block text-xs text-white/40 font-mono mb-2">UPLOAD IMAGE</label>
               <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full text-sm text-white/50 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-mono file:bg-white/10 file:text-white/70 file:cursor-pointer file:transition-colors file:hover:bg-white/20" />
+            </div>
+
+            <div>
+              <label className="block text-xs text-white/40 font-mono mb-2">OR USE TEMPLATE</label>
+              <div className="grid grid-cols-5 gap-2">
+                {uncsImages.map((img, i) => (
+                  <button key={i} onClick={() => selectUncsImage(img)} className={`aspect-square rounded-lg overflow-hidden border ${image === img ? 'border-white ring-2 ring-white' : 'border-white/10 hover:border-white/30'} transition-colors`}>
+                    <img src={img} alt={`Template ${i+1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
             </div>
 
             {image && (
